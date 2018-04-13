@@ -1,0 +1,129 @@
+#include <iostream>
+#include "conio.h"
+using namespace std;
+class distancia
+{
+private:
+	int km;
+	int mt;
+	int cm;
+public:
+	distancia()
+	{
+		km=mt=cm=0;
+	}
+	void setkm(int k)
+	{
+		km=k;
+	}
+	void setmt(int m)
+	{
+		mt=m;
+	}
+	void setcm(int c)
+	{
+		cm=c;
+	}
+	int getkm()
+	{
+		return km;
+	}
+	int getmt()
+	{
+		return mt;
+	}
+	int getcm()
+	{
+		return cm;
+	}
+	void leer()
+	{
+		int k,m,c;
+		cout<<"Kilometros: ";
+		cin>>k;
+		cout<<"Metros: ";
+		cin>>m;
+		cout<<"Centimetros: ";
+		cin>>c;
+		km=k;
+		mt=m;
+		cm=c;
+	}
+	void mostrar()
+	{
+		cout<<km<<" Km"<<endl<<mt<<" Mts"<<endl<<cm<<" Cm"<<endl;
+	}
+	distancia menor (distancia d1);
+	void aumentarCentimetros (int cm);
+};
+distancia distancia::menor (distancia d1)
+{
+	distancia d;
+	int km2=d1.getkm();
+	int mt2=d1.getmt();
+	int cm2=d1.getcm();
+	if(km>=km2 || (km==km2 && mt>=mt2) || (km==km2 && mt==mt2 && cm>=cm2))
+		return d1;
+	else
+		return *this;
+}
+void distancia::aumentarCentimetros (int c)
+{
+	if (c<100 && (cm+c)<100)
+		cm=cm+c;
+	else
+	{
+		if(c==100)
+			mt++;
+		else
+		{
+			if(c>100)
+			{
+				while(c>100)
+				{
+					mt++;
+					c=c-100;
+				}
+				cm=cm+c;
+
+				while(mt>=1000)
+					{
+						mt=(mt-1000);
+						km++;
+					}
+			}
+			else
+			{
+				if ((cm+c)>=100)
+				{
+					while((cm+c)>=100)
+					{
+						cm=(cm+c)-100;
+						mt++;
+					}
+					while(mt>=1000)
+					{
+						mt=(mt-1000);
+						km++;
+					}
+				}
+			}
+		}
+	}
+}
+void main()
+{
+	int c;
+	distancia d1,d2,d3;
+	cout<<"Introducir cm que quiere aumentar:  ";
+	cin>>c;
+	d1.leer();
+	//d2.leer();
+	//d3=d1.menor(d2);
+	d1.mostrar();
+	d1.aumentarCentimetros(c);
+	cout<<endl<<endl;
+	d1.mostrar();
+	//d3.mostrar();
+	getch();
+}
